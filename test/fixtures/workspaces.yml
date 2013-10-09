@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  floor: MyString
+  location: MyString
+  image_url: MyText
+  qty: 1
+  building: 
+
+two:
+  floor: MyString
+  location: MyString
+  image_url: MyText
+  qty: 1
+  building: 

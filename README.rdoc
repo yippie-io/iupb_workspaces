@@ -1,0 +1,29 @@
+== iUPB Workplaces API
+
+A RESTful HyperMedia System by yippie.io!
+
+It's a JSON API for the student workplaces available from the University of Paderborn.
+
+== Getting started
+
+Here’s how to get rolling:
+
+=== Find a building
+To see all available buildings, GET /buildings.json.
+
+... 
+
+more to follow
+
+...
+
+
+== JSONP
+
+For any url, use the .jsonp extension followed by your callback, like in:
+/buildings.jsonp?callback=jsonpsuccess
+
+
+== Credits
+
+part of iUPB / made by yippie.io / powered by Rails / data by Uni Paderborn
