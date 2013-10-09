@@ -12,22 +12,25 @@ class WorkplaceCrawler
   end
   
   def run!
-    each_url do |url|
+    urls.each do |url|
       crawl_buildings_and_workplaces(url)
     end
   end
   
-  def each_url
+  def urls
     prefix = root_host + root_path
     SUB_PAGES.map do |page|
       prefix + page
-    end.each
+    end
   end
   
   def crawl_buildings_and_workplaces(url)
+    puts "opening #{url}..."
     doc = Nokogiri::HTML(open(url))
-    buildings = doc.css("div.content2 h1").map(&:content).map(&:strip)
-    workplace_tables = doc.css("div.content2 table").map do |table|
+    buildings = doc.css("div#content2 h1").map(&:content).map(&:strip)
+    buildings = buildings.drop(1) unless buildings.length == 1
+    puts 'found buildings: ' + buildings.join(', ')
+    workplace_tables = doc.css("div#content2 table").map do |table|
       table.css("tbody")
     end
     workplace_tables.each_with_index do |table, index|
@@ -38,6 +41,7 @@ class WorkplaceCrawler
   end
   
   def parse_table_for_building(table, _building)
+    print "parsing building #{_building}... "
     building = Building.find_or_create_by_name(_building)
     workspace_objects = table.css("tr").map do |row|
       columns = row.css("td")
@@ -46,7 +50,7 @@ class WorkplaceCrawler
       location = columns[1].content.strip
       image = columns[2].css("img").first.attr("src")
       qty = columns[3].content.strip
-      equipments = columns[4].css("img").map {|img| attr("src")}.map do |eq_url|
+      equipments = columns[4].css("img").map {|img| img.attr("src")}.map do |eq_url|
         Equipment.find_or_create_by_image_url(eq_url)
       end.compact
       Workspace.new.tap do |w|
@@ -61,6 +65,7 @@ class WorkplaceCrawler
     if workspace_objects.any?
       building.workspaces.delete_all
       workspace_objects.each(&:save)
+      puts 'done'
     else
       puts "no workspaces found for #{_building}"
     end
