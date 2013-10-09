@@ -11,6 +11,12 @@ class WorkplaceCrawler
     @root_path = root_path
   end
   
+  def run!
+    each_url do |url|
+      crawl_buildings_and_workplaces(url)
+    end
+  end
+  
   def each_url
     prefix = root_host + root_path
     SUB_PAGES.map do |page|
@@ -41,7 +47,7 @@ class WorkplaceCrawler
       image = columns[2].css("img").first.attr("src")
       qty = columns[3].content.strip
       equipments = columns[4].css("img").map {|img| attr("src")}.map do |eq_url|
-        Equipment.find_or_create_by_image_url("eq_url")
+        Equipment.find_or_create_by_image_url(eq_url)
       end.compact
       Workspace.new.tap do |w|
         w.floor = floor
@@ -52,7 +58,12 @@ class WorkplaceCrawler
         w.building = building
       end
     end.compact
-    workspace_objects.each(&:save!)
+    if workspace_objects.any?
+      building.workspaces.delete_all
+      workspace_objects.each(&:save)
+    else
+      puts "no workspaces found for #{_building}"
+    end
   end
   
 end
