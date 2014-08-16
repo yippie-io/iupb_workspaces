@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131009211522) do
+ActiveRecord::Schema.define(:version => 20140816231405) do
 
   create_table "buildings", :force => true do |t|
     t.string   "name"
     t.string   "url"
     t.float    "lat"
-    t.float    "long"
+    t.float    "lng"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(:version => 20131009211522) do
     t.integer  "building_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.float    "lat"
+    t.float    "lng"
   end
 
 end

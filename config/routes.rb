@@ -3,13 +3,12 @@ IupbWorkplaces::Application.routes.draw do
   get "admin/status", as: "crawl_status"
   post "admin/crawl", as: "crawl"
 
-  resources :faculties, only: [:show, :index] do
-    resources :studies, only: [:show, :index] do
-      get :search, on: :collection
-      resources :infos, only: [:show, :index] do
-        get :search, on: :collection
-      end
-    end
+  resources :workspaces, only: [:index] do
+    post :geo_search
+  end
+
+  resources :buildings, only: [:index] do
+    resources :workspaces, only: [:index]
   end
 
   # The priority is based upon order of creation:

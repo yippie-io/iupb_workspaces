@@ -1,3 +1,3 @@
 class BuildingSerializer < ActiveModel::Serializer
-  attributes :name
+  attributes :name, :lat, :lng
 end

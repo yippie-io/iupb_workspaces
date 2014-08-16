@@ -4,7 +4,7 @@ class CreateBuildings < ActiveRecord::Migration
       t.string :name
       t.string :url
       t.float :lat
-      t.float :long
+      t.float :lng
 
       t.timestamps
     end
