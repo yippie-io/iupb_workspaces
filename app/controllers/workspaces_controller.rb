@@ -10,7 +10,8 @@ class WorkspacesController < ApplicationController
   end
 
   def index
-    @workspaces = Workspace.includes(:buildings).order("buildings.name")
+    @workspaces = Workspace.all
+    render json: @workspaces
   end
 
   def feedback
