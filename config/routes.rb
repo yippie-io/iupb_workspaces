@@ -5,6 +5,10 @@ IupbWorkplaces::Application.routes.draw do
 
   resources :workspaces, only: [:index] do
     post :geo_search
+    get :geo_search
+    member do
+      post :feedback
+    end
   end
 
   resources :buildings, only: [:index] do

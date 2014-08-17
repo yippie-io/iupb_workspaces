@@ -403,8 +403,10 @@ footer p {
             function success(position) {
               var latitude  = position.coords.latitude;
               var longitude = position.coords.longitude;
+              var accuracy  = position.coords.accuracy;
+              var altitude = position.coords.altitude;
 
-              output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+              output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°.<br>Height:' + altitude + ' m</p><p>' + 'More or less ' + accuracy + ' meters accurate. </p>';
 
               var img = new Image();
               img.src = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=18&size=300x300&sensor=false";
